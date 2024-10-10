@@ -1,3 +1,3 @@
-# Studnet and courses managing application
+# Students and courses managing application
 
-Application to register university students and courses. Created using Java JPA and MyBatis
+Application to register and manage university students, courses. Created using Java JPA and MyBatis.
