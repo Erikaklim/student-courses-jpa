@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="JavaWebDB" targetRuntime="MyBatis3Simple">
+        <jdbcConnection driverClass="org.h2.Driver"
+                        connectionURL="jdbc:h2:~/h2database/JavaWebDB;AUTO_SERVER=TRUE"
+                        userId="sa"
+                        password="sa">
+        </jdbcConnection>
+
+<!--        specify java model and XML mapper locations-->
+        <javaModelGenerator targetPackage="com.example.javawebtry.mybatis.model" targetProject="MAVEN" />
+        <sqlMapGenerator targetPackage="com.example.javawebtry.mybatis.xml" targetProject="MAVEN" />
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.javawebtry.mybatis.dao" targetProject="MAVEN" />
+
+
+        <table schema="public" tableName="course">
+<!--            jdbc - java database connection uses getGeneratedKey() to retrieve the generated key after insertion-->
+            <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+        </table>
+        <table schema="public" tableName="studentgroup">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+        </table>
+        <table schema="public" tableName="students">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+        </table>
+        <table schema="public" tableName="students_course" />
+    </context>
+</generatorConfiguration>

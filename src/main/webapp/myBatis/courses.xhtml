@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Courses</title>
+    <link rel="stylesheet" type="text/css" href="../style.css"/>
+</h:head>
+<h:body>
+    <h2>Courses:</h2>
+    <table class="list-table">
+        <thead>
+        <tr>
+            <th>Course Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ui:repeat value="#{coursesMyBatis.allCourses}" var="course">
+            <tr>
+                <td>
+                    <h:link value="#{course.title}" outcome="/students.xhtml">
+                        <f:param name="courseId" value="#{course.id}"/>
+                    </h:link>
+                </td>
+            </tr>
+        </ui:repeat>
+        </tbody>
+    </table>
+    <div style="margin-top: 10px">Create a new course: </div>
+    <h:form style="margin-top: 10px;">
+        <h:panelGrid columns="2">
+            <h:outputLabel for="title" value="Course title:"/>
+            <h:inputText id="title" value="#{coursesMyBatis.courseToCreate.title}" required="true"/>
+
+            <h:outputLabel for="professor" value="Professor:"/>
+            <h:inputText id="professor" value="#{coursesMyBatis.courseToCreate.teacher}" required="true"/>
+        </h:panelGrid>
+        <div style="margin-top: 10px">
+            <h:commandButton value="Add course" action="#{coursesMyBatis.createCourse()}"/>
+        </div>
+    </h:form>
+    <h:button style="margin-top: 10px" value="Go back" outcome="/courses.xhtml"/>
+
+</h:body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+    <f:viewParam name="studentId" value="#{studentCourses.studentId}"/>
+    <f:viewAction action="#{studentCourses.loadStudentData()}"/>
+    <f:viewAction action="#{studentCourses.refreshCourseLists()}"/>
+</f:metadata>
+<h:head>
+    <title>Student Courses</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</h:head>
+<h:body>
+    <h2>#{studentCourses.student.name} #{studentCourses.student.lastName}</h2>
+    <div style="margin-bottom: 10px">
+        <h:link value="Year #{studentCourses.student.group.year}: Group #{studentCourses.student.group.groupNumber}" outcome="group.xhtml">
+            <f:param name="groupId" value="#{studentCourses.student.group.id}"/>
+        </h:link>
+    </div>
+    <table class="list-table">
+        <thead>
+        <tr>
+            <th>Course Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ui:repeat value="#{studentCourses.studentCourses}" var="course">
+            <tr>
+                <td>
+                    <h:link value="#{course.title}" outcome="students.xhtml">
+                        <f:param name="courseId" value="#{course.id}"/>
+                    </h:link>
+                </td>
+            </tr>
+        </ui:repeat>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 10px; margin-bottom: 10px">Add course/s to the student:</div>
+
+    <div style="height: 200px; overflow-y: scroll; width: fit-content;">
+        <table class="list-table"  style="width: 100%">
+            <thead>
+            <tr>
+                <th>Course</th>
+                <th>Add</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ui:repeat value="#{studentCourses.availableCourses}" var="course">
+                <tr>
+                    <td>
+                        <h:link value="#{course.title}" outcome="students.xhtml">
+                            <f:param name="courseId" value="#{course.id}"/>
+                        </h:link>
+                    </td>
+                    <td>
+                        <h:form>
+                            <h:commandButton value="Add course" action="#{studentCourses.addStudentToCourse(course.id)}"/>
+                        </h:form>
+                    </td>
+                </tr>
+            </ui:repeat>
+            </tbody>
+        </table>
+    </div>
+    <div style="margin-top: 10px">
+        <h:button value="Add a new course" outcome="courses.xhtml"/>
+    </div>
+</h:body>
+
+</html>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<f:metadata>
+    <f:viewParam name="courseId" value="#{students.courseId}" />
+    <f:viewAction action="#{students.loadCourseData}" />
+    <f:viewAction action="#{students.refreshStudentLists()}"/>
+</f:metadata>
+<h:head>
+    <title>Students</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</h:head>
+<h:body>
+    <h2>Students in #{students.course.title} course:</h2>
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Group</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ui:repeat value="#{students.courseStudents}" var="student">
+                <tr>
+                    <td>
+                        <h:link value="#{student.name} #{student.lastName}" outcome="studentCourses.xhtml">
+                            <f:param name="studentId" value="#{student.id}"/>
+                        </h:link>
+                    </td>
+                    <td>
+                        <h:link value="Group #{student.group.groupNumber}" outcome="group.xhtml">
+                            <f:param name="groupId" value="#{student.group.id}"/>
+                        </h:link>
+                    </td>
+                </tr>
+            </ui:repeat>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 10px">Add available student/s to the course:</div>
+
+    <div style="margin-top: 10px;
+    height: 150px;
+    overflow-y: scroll;
+    width: fit-content;">
+        <table class="list-table" style="width: 100%">
+            <thead>
+            <tr>
+                <th>Student</th>
+                <th>Group</th>
+                <th>Add</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ui:repeat value="#{students.allAvailableStudents}" var="student">
+                <tr>
+                    <td>
+                        <h:link value="#{student.name} #{student.lastName}" outcome="studentCourses.xhtml">
+                            <f:param name="studentId" value="#{student.id}"/>
+                        </h:link>
+                    </td>
+                    <td>
+                        <h:link value="Group #{student.group.groupNumber}" outcome="group.xgtml">
+                            <f:param name="groupId" value="#{student.group.id}"/>
+                        </h:link>
+                    </td>
+                    <td>
+                        <h:form>
+                            <h:commandButton value="Add student" action="#{students.addStudentToCourse(student.id)}"/>
+                        </h:form>
+                    </td>
+                </tr>
+            </ui:repeat>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 20px">Can't find a student? Create a new student and check the list of available students again</div>
+    <div style="margin-top: 10px;">
+        <h:button value="Create new student" outcome="newStudent.xhtml">
+            <f:param name="courseId" value="#{students.course.id}" />
+        </h:button>
+    </div>
+    <div style="margin-top: 10px">
+        <h:button value="Back to courses" outcome="courses.xhtml"/>
+    </div>
+</h:body>
+</html>
